@@ -64,7 +64,9 @@ $(function() {
         const menu = document.querySelector('.menu-icon-link');
 
         menu.click(); // simulate a 'click' event
-        expect(document.querySelector('body').classList.contains('menu-hidden')).toBe(false); //expect false because after the simulated 'click', it would be false
+        expect(document.querySelector('body').classList.contains('menu-hidden')).toBe(false); //expect false because after the simulated 'click' menu should not be hidden.
+        menu.click(); // simulate a second 'click' event
+        expect(document.querySelector('body').classList.contains('menu-hidden')).toBe(true); //expect true after second simulated 'click' to return menu to hidden.
       });
     });
     /* Test suite named "Initial Entries" */
