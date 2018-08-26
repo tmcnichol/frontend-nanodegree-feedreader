@@ -30,7 +30,7 @@ $(function() {
          it('url defined', function() {
            for(let feed of allFeeds) {
            expect(feed.url).toBeDefined();
-           expect(feed.length).not.toBe(0);
+           expect(feed.url.length).not.toBe(0);
          }
        });
 
@@ -41,7 +41,7 @@ $(function() {
          it('name defined', function() {
            for(let feed of allFeeds) {
            expect(feed.name).toBeDefined();
-           expect(feed.length).not.toBe(0);
+           expect(feed.name.length).not.toBe(0);
          }
        });
     });
@@ -84,7 +84,7 @@ $(function() {
 
        it('has a single .entry', function() {
        const feed = document.querySelector('.feed');
-       expect(feed.children.length > 0).toBe(true);
+       expect(feed.querySelectorAll('.entry').length > 0).toBe(true);
        });
      });
     /* Test suite named "New Feed Selection'" */
@@ -98,13 +98,15 @@ $(function() {
          * asynchronous loadFeed() before Jasmine resumes testing.
          */
 
-         beforeEach(function(done) {
-           loadFeed(0);
-           Array.from(feed.children).forEach(function(entry) {
-             feedList.push(entry.innerText);
+     beforeEach(function (done) {
+       loadFeed(1, function() {  // loads first feed
+          feedOne = $('.feed').html();  // using jQuery to save its contents in a variable. The way you are doing it is also correct.
+          loadFeed(2, function() { // loads second feed as callback of first.
+                feedTwo = $('.feed').html();  // saves contents of second feed.
+               done();  // calls done() to exit and run the spec.
+             });
            });
-           loadFeed(1, done);
-         });
+      });
 
          it('loads new feed', function() {
            Array.from(feed.children).forEach(function (entry, index) {
