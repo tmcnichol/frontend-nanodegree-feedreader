@@ -90,8 +90,6 @@ $(function() {
     /* Test suite named "New Feed Selection'" */
     describe ('New Feed Selection', function() {
       const feed = document.querySelector('.feed');
-      const feedList = [];
-
         /* Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Again, by utilizing beforeEach & done(), we are able to run the
@@ -100,19 +98,15 @@ $(function() {
 
      beforeEach(function (done) {
        loadFeed(1, function() {  // loads first feed
-          feedOne = $('.feed').html();  // using jQuery to save its contents in a variable. The way you are doing it is also correct.
+          feedOne = $('.feed').html();  // using jQuery to save its contents in a variable.
           loadFeed(2, function() { // loads second feed as callback of first.
                 feedTwo = $('.feed').html();  // saves contents of second feed.
                done();  // calls done() to exit and run the spec.
              });
            });
       });
-
          it('loads new feed', function() {
-           Array.from(feed.children).forEach(function (entry, index) {
-             expect(entry.innerText === feedList[index]).toBe(false)
-         });
+           expect(feedOne).not.toBe(feedTwo);
        });
-
      });
 }());
